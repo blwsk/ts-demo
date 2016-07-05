@@ -1,0 +1,22 @@
+{
+  "name": "ts-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "ts-loader": "^0.8.2",
+    "typescript": "^1.8.10"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blwsk/ts-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blwsk/ts-demo/issues"
+  },
+  "homepage": "https://github.com/blwsk/ts-demo#readme"
+}
