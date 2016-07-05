@@ -1,89 +1,42 @@
-interface Element {
-  tag: string;
-  props: Object;
-  children: any;
+import {Element} from './interfaces.ts';
+import {div, span, button, Branch} from './components.ts';
+import {render, translateToElement} from './render.ts';
+
+const MessageViewer: ((string) => Element) = (message: string) => {
+  return div({}, `Message: ${message}`);
 }
 
-interface AppProps {
+const MessageChanger: ((Function) => Element) = (onClick: Function) => {
+  return button({onClick}, `Click`);
+}
+
+interface StateInterface {
   message: string;
-  onClick: Function;
 }
 
-function createElementType<Function>(tag: string) {
-  return function<Element>(props: Object, children: any) {
-    return {
-      tag,
-      props,
-      children
-    };
+class App extends Branch {
+  props: StateInterface;
+
+  constructor(props: StateInterface) {
+    super(props);
+  }
+
+  changeMessage(e: Event) {
+    console.log(e);
+  }
+
+  render() {
+    return div({className: 'app'}, [
+      MessageViewer(this.props.message),
+      MessageChanger(this.changeMessage)
+    ]);
   }
 }
 
-const div: Function = createElementType('div');
-const span: Function = createElementType('span');
-const button: Function = createElementType('button');
+const state: Object = {
+  message: 'hi'
+};
 
-function render<Function>(state: Object, translator: ((el: Element) => HTMLElement)) {
-  let cachedChild: any = null;
+const renderer: Function = render(state, translateToElement);
 
-  return function (el: Element, node: HTMLElement) {
-    const translated: HTMLElement = translator(el);
-
-    if (cachedChild) {
-      node.replaceChild(translated, cachedChild);
-    }
-    else {
-      cachedChild = translated;
-      node.appendChild(cachedChild);
-    }
-  }
-}
-
-function translateToElement<HTMLElement>(el: Element) {
-  const {
-    tag,
-    props,
-    children
-  } = el;
-
-  const node: any = document.createElement(tag);
-
-  switch (typeof children) {
-    case 'string':
-    case 'number':
-      node.appendChild(
-        document.createTextNode(children)
-      );
-      break;
-
-    default:
-      const translatedChildren: Array<HTMLElement> = children.map(translateToElement);
-      translatedChildren.forEach(child => node.appendChild(child));
-      break;
-  }
-
-  return node;
-}
-
-function App<Element>(props: AppProps) {
-  const {
-    message,
-    onClick
-  } = props;
-
-  return (
-    div({}, [
-      button({onClick}, 'Click me'),
-      span({}, `Message: ${message}`)
-    ])
-  );
-}
-
-render({}, translateToElement)((
-  App({
-    message: 'Hello',
-    onClick: (e: Event) => {
-      console.log(e);
-    }
-  })
-), document.getElementById('root'));
+renderer(App, document.getElementById('root'));
