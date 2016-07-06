@@ -6,6 +6,7 @@ function createElementType<Function>(tag: string) {
   return function<Element>(props: Object, children: any) {
     return {
       type: elements.LEAF,
+      uid: uniqueId(),
       tag,
       props,
       children

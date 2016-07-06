@@ -1,13 +1,27 @@
 import {Element} from './interfaces.ts';
 import {Branch} from './components.ts';
-import {attributes} from './constants.ts';
+import {attributes, events} from './constants.ts';
+import {Store} from './store.ts';
 
-function attachProps(node: HTMLElement, props: Object) {
+function attachAttributes(uid: number, node: HTMLElement, props: Object) {
   const keys = Object.keys(props);
+
+  node.setAttribute('id', uid.toString());
 
   keys.forEach(key => {
     if (Object.keys(attributes).indexOf(key) >= 0) {
       node.setAttribute(attributes[key], props[key]);
+    }
+  });
+}
+
+
+function attachEventListeners(uid: number, node: HTMLElement, props: Object) {
+  const keys = Object.keys(props);
+
+  keys.forEach(key => {
+    if (Object.keys(events).indexOf(key) >= 0) {
+      node.addEventListener(events[key], props[key]);
     }
   });
 }
@@ -22,6 +36,7 @@ export function translateToElement<HTMLElement>(el: any, state?: Object) {
   }
 
   const {
+    uid,
     tag,
     props,
     children
@@ -29,7 +44,8 @@ export function translateToElement<HTMLElement>(el: any, state?: Object) {
 
   const node: any = document.createElement(tag);
 
-  attachProps(node, props);
+  attachAttributes(uid, node, props);
+  attachEventListeners(uid, node, props);
 
   switch (typeof children) {
     case 'undefined':
@@ -48,23 +64,24 @@ export function translateToElement<HTMLElement>(el: any, state?: Object) {
       break;
   }
 
-
-
   return node;
 }
 
-export function render<Function>(state: Object, translator: ((el: Element, state: Object) => HTMLElement)) {
+export function render<Function>(store: Store, translator: ((el: Element, state: Object) => HTMLElement)) {
   let cachedChild: any = null;
 
   return function (el: Element, node: HTMLElement) {
-    const translated: HTMLElement = translator(el, state);
+    store.register((state: Object) => {
+      state['dispatch'] = store.dispatch;
+      const translated: HTMLElement = translator(el, state);
 
-    if (cachedChild) {
-      node.replaceChild(translated, cachedChild);
-    }
-    else {
-      cachedChild = translated;
-      node.appendChild(cachedChild);
-    }
+      if (cachedChild) {
+        node.replaceChild(translated, cachedChild);
+      }
+      else {
+        cachedChild = translated;
+        node.appendChild(cachedChild);
+      }
+    });
   }
 }
