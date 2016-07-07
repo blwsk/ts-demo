@@ -1,5 +1,5 @@
 module.exports = {
-  entry: "./src/index.ts",
+  entry: "./src/index.js",
 
   output: {
     filename: "./dist/bundle.js",
@@ -13,6 +13,10 @@ module.exports = {
     loaders: [{
       test: /\.ts$/,
       loader: "ts-loader"
+    }, {
+      test: /\.js$/,
+      exclude: /(node_modules|bower_components)/,
+      loader: 'babel'
     }]
   }
 };

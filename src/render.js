@@ -1,9 +1,10 @@
-import {Element} from './interfaces.ts';
-import {Branch} from './components.ts';
-import {attributes, events} from './constants.ts';
-import {Store} from './store.ts';
+// @flow
 
-function attachAttributes(uid: number, node: HTMLElement, props: Object) {
+import {Branch} from './components.js';
+import {attributes, events} from './constants.js';
+import {Store} from './store.js';
+
+function attachAttributes(uid, node, props) {
   const keys = Object.keys(props);
 
   node.setAttribute('id', uid.toString());
@@ -15,8 +16,7 @@ function attachAttributes(uid: number, node: HTMLElement, props: Object) {
   });
 }
 
-
-function attachEventListeners(uid: number, node: HTMLElement, props: Object) {
+function attachEventListeners(uid, node, props) {
   const keys = Object.keys(props);
 
   keys.forEach(key => {
@@ -26,9 +26,9 @@ function attachEventListeners(uid: number, node: HTMLElement, props: Object) {
   });
 }
 
-export function translateToElement<HTMLElement>(el: any, state?: Object) {
+export function translateToElement(el, state) {
   if (typeof el === 'function') {
-    const component: Branch = new el(state);
+    const component = new el(state);
 
     if (component.shouldRender()) {
       return translateToElement(component.render());
@@ -42,7 +42,7 @@ export function translateToElement<HTMLElement>(el: any, state?: Object) {
     children
   } = el;
 
-  const node: any = document.createElement(tag);
+  const node = document.createElement(tag);
 
   attachAttributes(uid, node, props);
   attachEventListeners(uid, node, props);
@@ -59,7 +59,7 @@ export function translateToElement<HTMLElement>(el: any, state?: Object) {
       break;
 
     default:
-      const translatedChildren: Array<HTMLElement> = children.map(translateToElement);
+      const translatedChildren = children.map(translateToElement);
       translatedChildren.forEach(child => node.appendChild(child));
       break;
   }
@@ -67,21 +67,24 @@ export function translateToElement<HTMLElement>(el: any, state?: Object) {
   return node;
 }
 
-export function render<Function>(store: Store, translator: ((el: Element, state: Object) => HTMLElement)) {
-  let cachedChild: any = null;
+export function render(store, translator) {
+  let cachedChild = null;
 
-  return function (el: Element, node: HTMLElement) {
-    store.register((state: Object) => {
-      state['dispatch'] = store.dispatch;
-      const translated: HTMLElement = translator(el, state);
+  return function (el, node) {
+    store.register(state => {
+      console.log(state);
+      state = Object.assign({}, state, {dispatch: store.dispatch});
+
+      const translated = translator(el, state);
 
       if (cachedChild) {
         node.replaceChild(translated, cachedChild);
       }
       else {
-        cachedChild = translated;
-        node.appendChild(cachedChild);
+        node.appendChild(translated);
       }
+
+      cachedChild = translated;
     });
   }
 }

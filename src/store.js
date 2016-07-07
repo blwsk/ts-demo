@@ -1,14 +1,7 @@
-export interface Action {
-  type: string;
-  payload: any;
-}
+// @flow
 
 export class Store {
-  state: Object;
-  reducer: ((Object, Action) => Object);
-  subscribers: Array<Function>;
-
-  constructor(state: Object, reducer: ((Object, Action) => Object)) {
+  constructor(state, reducer) {
     this.state = state;
     this.reducer = reducer;
     this.subscribers = [];
@@ -20,7 +13,7 @@ export class Store {
     this.notifySubscribers = this.notifySubscribers.bind(this);
   }
 
-  dispatch(action: any) {
+  dispatch(action) {
     if (typeof action === 'function') {
       action(this.dispatch, this.getState);
     }
@@ -34,7 +27,7 @@ export class Store {
     return this.state;
   }
 
-  register(func: Function) {
+  register(func) {
     func(this.state);
 
     this.subscribers.push(func);
@@ -45,6 +38,6 @@ export class Store {
   }
 }
 
-export function createStore<Store>(state: Object, reducer: ((Object, Action) => Object)) {
+export function createStore(state, reducer) {
   return new Store(state, reducer);
 }
