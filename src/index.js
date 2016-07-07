@@ -2,7 +2,7 @@
 
 import {div, span, button, input, h1, hr, Branch} from './components.js';
 import {render, translateToElement} from './render.js';
-import {createStore, Action} from './store.js';
+import {createStore} from './store.js';
 
 class Header extends Branch {
   constructor(props) {
