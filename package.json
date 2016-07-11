@@ -1,11 +1,9 @@
 {
-  "name": "ts-demo",
+  "name": "woof",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/index.ts",
-  "dependencies": {
-    "object-assign": "^4.1.0"
-  },
+  "main": "./src/index.js",
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
@@ -23,12 +21,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/blwsk/ts-demo.git"
+    "url": "git+https://github.com/blwsk/woof.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/blwsk/ts-demo/issues"
+    "url": "https://github.com/blwsk/woof/issues"
   },
-  "homepage": "https://github.com/blwsk/ts-demo#readme"
+  "homepage": "https://github.com/blwsk/woof#readme"
 }
