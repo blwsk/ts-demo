@@ -24,20 +24,23 @@ function applyProps (node: HTMLElement, props: Object) {
     });
 }
 
+type Component = {
+  shouldRender: ((Object) => boolean);
+  reconcileProps: ((Object) => HTMLElement);
+}
+
 type ElementArgs = {
-  tag: string;
+  identifier: string | Component;
   props: Object;
   children: Array<ElementArgs> | string | number;
 };
 
-function createElement (args: ElementArgs): HTMLElement {
-  const {
-    tag,
-    props,
-    children
-  } = args;
+function createElement ({identifier, props, children}: ElementArgs): HTMLElement {
+  if (typeof identifier === 'object') {
+    return identifier.reconcileProps(props);
+  }
 
-  const node: HTMLElement = document.createElement(tag);
+  const node: HTMLElement = document.createElement(identifier);
 
   // mutates node
   applyProps(node, props);

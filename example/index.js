@@ -1,5 +1,56 @@
-import {createStore} from '../src/lib/store.js';
-import {div, span, button} from '../src/lib/components.js';
+// @flow
+
+import {div, span, button, input, h1, hr, Branch} from './components.js';
+import {render, translateToElement} from './render.js';
+import {createStore} from './store.js';
+
+class Header extends Branch {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      div({}, [
+        h1({}, `Count: ${this.props.count}`),
+        hr()
+      ])
+    );
+  }
+}
+
+class App extends Branch {
+  props: Object;
+
+  constructor(props, children) {
+    super(props, children);
+    this.handleIncrement = this.handleIncrement.bind(this);
+    this.handleDecrement = this.handleDecrement.bind(this);
+  }
+
+  handleIncrement(e) {
+    this.props.dispatch((dispatch, getState) => {
+      setTimeout(() => {
+        dispatch({type: 'INCREMENT'});
+      }, 2000);
+      dispatch({type: 'DECREMENT'});
+    });
+  }
+
+  handleDecrement(e) {
+    this.props.dispatch({type: 'DECREMENT'});
+  }
+
+  render() {
+    return (
+      div({className: 'app'}, [
+        Header.bind(null, {count: this.props.count}),
+        button({onClick: this.handleIncrement}, `Up`),
+        button({onClick: this.handleDecrement}, `Down`)
+      ])
+    );
+  }
+}
 
 const initialState = {
   count: 0
@@ -8,89 +59,20 @@ const initialState = {
 function reducer(state = initialState, action) {
   switch (action.type) {
     case 'INCREMENT':
-      return Object.assign({}, state, {count: state.count + 1});
+      state = Object.assign({}, state, {count: state.count + 1});
       break;
     case 'DECREMENT':
-      return Object.assign({}, state, {count: state.count - 1});
+      state = Object.assign({}, state, {count: state.count - 1});
       break;
     default:
-      return state;
       break;
   }
+
+  return state;
 }
 
 const store = createStore(initialState, reducer);
 
-const {
-  dispatch,
-  getState
-} = store;
+const renderer = render(store, translateToElement);
 
-const App = div({}, [
-  span({className: 'kevin'}, 'Kevin '),
-  span({className: 'bielawski'}, 'Bielawski')
-]);
-
-function translateToDOM(elementTree, state) {
-  if (typeof elementTree === 'function') {
-    const el = new elementTree();
-    const {
-      mapStateToProps
-    } = el;
-
-    const props = mapStateToProps(state);
-
-    el.updateProps(props);
-
-    if (el.shouldRender() || el.getNode() === null) {
-      const renderedElement = el.render();
-
-      const {
-        updatedTree,
-        translatedNode
-      } = translateToDOM(renderedElement, state);
-
-      el.setNode(translatedNode);
-
-      return {
-        updatedTree,
-        translatedNode
-      };
-    }
-    else {
-      return {
-        updatedTree: ,
-        translatedNode: 
-      };
-    }
-  }
-
-  const {
-    tag,
-    props,
-    children
-  } = elementTree;
-}
-
-const render = (element, $root) => {
-  let cache = null;
-
-  const doRender = state => {
-    const {
-      updatedTree,
-      translatedNode
-    } = translateToDOM(cache, state);
-
-    cache = updatedTree;
-
-    if ($root.childNodes.length > 0) {
-      $root.childNodes.forEach(child => $root.removeChild(child));
-    }
-
-    $root.appendChild(translatedNode);
-  }
-
-  store.register(doRender);
-}
-
-render(App, document.getElementById('root'));
+renderer(App, document.getElementById('root'));
