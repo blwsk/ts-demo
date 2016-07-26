@@ -1,12 +1,22 @@
-import replaceNode from './replaceNode';
+import replaceNode from './replaceNode.js';
 
 export default class Component {
-  constructor(props = {}, children = []) {
+  constructor({props, children}) {
     this.blocker = [];
     this.node = null;
     this.props = props;
     this.children = children;
     this.state = {};
+
+    this.addBlocker = this.addBlocker.bind(this);
+    this.removeBlocker = this.removeBlocker.bind(this);
+    this.hasBlocker = this.hasBlocker.bind(this);
+
+    this.setState = this.setState.bind(this);
+    this.shouldRender = this.shouldRender.bind(this);
+    this.reconcileState = this.reconcileState.bind(this);
+    this.reconcileProps = this.reconcileProps.bind(this);
+    this.render = this.render.bind(this);
   }
 
   addBlocker(newBlocker) {

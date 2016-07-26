@@ -1,4 +1,4 @@
-import createElement from './createElement.ts';
+import createElement from './createElement.js';
 
 export default function (Root, parent) {
   if (typeof Root === 'object') {
