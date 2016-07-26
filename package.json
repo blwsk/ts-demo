@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/index.js",
-  "dependencies": {
-    "object-assign": "^4.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
@@ -16,7 +14,8 @@
     "babel-preset-react": "^6.11.1"
   },
   "scripts": {
-    "dev": "webpack --watch"
+    "dev": "webpack --config ./webpack.development.js --watch",
+    "build": "webpack --config ./webpack.production.js --optimize-minimize"
   },
   "repository": {
     "type": "git",

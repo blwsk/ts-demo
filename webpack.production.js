@@ -1,22 +1,20 @@
 module.exports = {
-  entry: "./example/index.js",
+  entry: "./src/index.js",
 
   output: {
-    filename: "./dist/bundle.js",
+    filename: "./dist/woof.min.js",
   },
 
   resolve: {
-    extensions: ["", ".ts", ".js"]
+    extensions: ["", ".js"]
   },
 
   module: {
     loaders: [{
-      test: /\.ts$/,
-      loader: "ts-loader"
-    }, {
       test: /\.js$/,
       exclude: /(node_modules|bower_components)/,
       loader: 'babel'
     }]
   }
 };
+
