@@ -1,5 +1,5 @@
 # woof
-
+test
 An experiment in creating a simple web app with a modern architecture, but no dependencies. It seems strange to include 60kb of React, et al, when the actual app code totals far less than that...
 
 Just playing around with:
