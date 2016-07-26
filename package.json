@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/index.js",
-  "dependencies": {},
+  "dependencies": {
+    "invariant": "^2.2.1"
+  },
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
