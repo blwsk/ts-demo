@@ -1,5 +1,5 @@
 {
-  "name": "woof",
+  "name": "woof-dom",
   "version": "1.0.0",
   "description": "",
   "main": "./src/index.js",
@@ -21,12 +21,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/blwsk/woof.git"
+    "url": "git+https://github.com/blwsk/woof-dom.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/blwsk/woof/issues"
+    "url": "https://github.com/blwsk/woof-dom/issues"
   },
-  "homepage": "https://github.com/blwsk/woof#readme"
+  "homepage": "https://github.com/blwsk/woof-dom#readme"
 }
