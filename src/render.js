@@ -1,3 +1,4 @@
+import invariant from 'invariant';
 import createElement from './createElement.js';
 
 export default function (Root, parent) {
@@ -6,7 +7,6 @@ export default function (Root, parent) {
     parent.appendChild(element);
   }
   else {
-    console.error('Root must be of type object or function');
-    return;
+    invariant('Root must be of type object or function');
   }
 }
