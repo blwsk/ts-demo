@@ -1,3 +1,4 @@
+import invariant from 'invariant';
 import replaceNode from './replaceNode.js';
 
 export default class Component {
@@ -36,7 +37,10 @@ export default class Component {
   */
   setState(stateChange) {
     if (this.hasBlocker('RENDER')) {
-      console.error('Cannot call `setState` during render()');
+      invariant(
+        !this.hasBlocker('RENDER'),
+        'Cannot call `setState` during render()'
+      );
       return;
     }
 
@@ -49,7 +53,7 @@ export default class Component {
     provides condition for re rendering based on new props
   */
   shouldRender(newProps) {
-    console.error('Component must implement `shouldRender` method');
+    invariant('Component must implement `shouldRender` method');
 
     return true;
   }
@@ -89,6 +93,6 @@ export default class Component {
   }
 
   render() {
-    console.error('Component must implement `render` method');
+    invariant('Component must implement `render` method');
   }
 }

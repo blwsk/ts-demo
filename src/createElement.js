@@ -1,3 +1,4 @@
+import invariant from 'invariant';
 import {attributes, events} from './constants.js';
 
 // function applyProps (node: HTMLElement, props: Object) {
@@ -69,7 +70,7 @@ function createElement (component, props, children) {
         });
       }
       else {
-        console.error('Expects children to be of type array | string | number.');
+        invariant('Expects children to be of type array | string | number.');
       }
     }
     else if (childrenType === 'string' || childrenType === 'number') {

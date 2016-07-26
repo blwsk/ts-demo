@@ -6,34 +6,57 @@ const {
 
 const div = (props, children) => Woof.createElement('div', props, children);
 
-class App extends Woof.Component {
+class Button extends Woof.Component {
   constructor(props) {
     super(props);
-
-    this.state = {message: 'Hi'};
-
-    this.renderLastName = this.renderLastName.bind(this);
   }
 
   shouldRender() {
     return true;
   }
 
-  renderLastName() {
-    return (
-      div({
-        onClick: () => this.setState({message: 'Hello'})
-      }, this.state.message)
-    );
+  render() {
+    return div({onClick: this.props.onClick}, 'Click me');
+  }
+}
+
+class App extends Woof.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      items: [{
+        id: 0,
+        title: 'Cannondale SuperSix Evo'
+      }, {
+        id: 1,
+        title: 'Garmin Forerunner 635'
+      }, {
+        id: 2,
+        title: 'Breakfast of Champions'
+      }]
+    };
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  shouldRender() {
+    return true;
+  }
+
+  handleClick(e) {
+    this.setState({
+      items: this.state.items.concat([{
+        title: 'UtiliTea'
+      }])
+    });
   }
 
   render() {
     return (
       div({}, [
-        div({
-          onClick: () => {alert(this.props.firstName)}
-        }, this.props.firstName),
-        this.renderLastName()
+        div({}, this.state.items.map(item => div({}, item.title))),
+        x(Button, {onClick: this.handleClick})
       ])
     );
   }
