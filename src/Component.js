@@ -74,7 +74,7 @@ export default class Component {
     this.node = newNode;
   }
 
-  reconcileProps(newProps) {
+  reconcileProps(newProps, newChildren) {
     /*
       initial render
       ...or conditionally render pending shouldRender()
@@ -82,6 +82,7 @@ export default class Component {
     const shouldUpdate = !this.props || this.shouldRender(newProps);
 
     this.props = newProps;
+    this.children = newChildren;
 
     if (shouldUpdate) {
       this.addBlocker('RENDER');

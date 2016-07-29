@@ -1,7 +1,7 @@
-export default function (Component, defaultProps) {
-  const element = new Component(defaultProps);
+export default function (Component, defaultProps = {}, defaultChildren = []) {
+  const element = new Component(defaultProps, defaultChildren);
 
-  return function (props, children) {
+  return function (props = {}, children = []) {
     element.reconcileProps(props, children);
 
     return element;

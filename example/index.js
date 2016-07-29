@@ -12,11 +12,12 @@ class Button extends Woof.Component {
   }
 
   render() {
-    return div({onClick: this.props.onClick}, 'Click me');
+    return div({onClick: this.props.onClick}, this.props.message);
   }
 }
 
-const ButtonClass = y(Button, {});
+const ButtonClass1 = y(Button);
+const ButtonClass2 = y(Button);
 
 class Ship extends Woof.Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class Ship extends Woof.Component {
   }
 }
 
-const ShipClass = y(Ship, {});
+const ShipClass = y(Ship);
 
 class App extends Woof.Component {
   constructor(props) {
@@ -89,14 +90,15 @@ class App extends Woof.Component {
     return (
       div({}, [
         div({}, this.state.items.map(item => div({}, item.title))),
-        ButtonClass({onClick: this.handleClick}),
+        ButtonClass1({onClick: this.handleClick, message: 'Hi'}),
+        ButtonClass2({onClick: this.handleClick, message: 'Hello'}),
         ShipClass()
       ])
     );
   }
 }
 
-const AppClass = y(App, {});
+const AppClass = y(App);
 
 Woof.render((
   AppClass()
