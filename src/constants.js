@@ -1,3 +1,4 @@
+// might no longer be necessary
 export const elements = {
   BRANCH: 'BRANCH',
   LEAF: 'LEAF',
@@ -14,7 +15,8 @@ export const attributes = {
   className: 'class',
   id: 'id',
   key: 'key',
-  value: 'value'
+  value: 'value',
+  href: 'href'
 }
 
 export const events = {
