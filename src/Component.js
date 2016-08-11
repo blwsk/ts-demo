@@ -1,5 +1,6 @@
 import invariant from 'invariant';
 import replaceNode from './replaceNode.js';
+import createElement from './createElement.js';
 
 export default class Component {
   constructor({props, children}) {
@@ -66,7 +67,7 @@ export default class Component {
     this.state = newState;
 
     this.addBlocker('RENDER');
-    const newNode = this.render();
+    const newNode = createElement(this.render());
     this.removeBlocker();
 
     replaceNode(this.node, newNode);
@@ -86,7 +87,7 @@ export default class Component {
 
     if (shouldUpdate) {
       this.addBlocker('RENDER');
-      this.node = this.render();
+      this.node = createElement(this.render());
       this.removeBlocker();
     }
 

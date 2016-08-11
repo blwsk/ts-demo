@@ -2,6 +2,29 @@ import Woof, {y} from '../src/index.js';
 
 const div = (props, children) => Woof.createElement('div', props, children);
 
+class _OnButton extends Woof.Component {
+  shouldRender() {
+    return true;
+  }
+
+  render() {
+    return div(this.props, 'On');
+  }
+}
+
+class _OffButton extends Woof.Component {
+  shouldRender() {
+    return true;
+  }
+  
+  render() {
+    return div(this.props, 'Off');
+  }
+}
+
+const OnButton = y(_OnButton);
+const OffButton = y(_OffButton);
+
 class Button extends Woof.Component {
   constructor(props) {
     super(props);
@@ -45,10 +68,10 @@ class Ship extends Woof.Component {
     const onClick = this.handleToggle;
 
     if (on) {
-      return div({onClick}, 'On');
+      return OnButton({onClick});
     }
 
-    return div({onClick}, 'Off');
+    return OffButton({onClick});
   }
 }
 
