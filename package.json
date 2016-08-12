@@ -20,7 +20,7 @@
   "scripts": {
     "dev": "webpack --config ./webpack.development.js --watch",
     "build": "webpack --config ./webpack.production.js --optimize-minimize",
-    "prepublish": "babel src --out-dir lib"
+    "prepublish": "npm run build && babel src --out-dir lib"
   },
   "repository": {
     "type": "git",
