@@ -32,6 +32,7 @@ class _InputBox extends Woof.Component {
   }
   render() {
     return input({
+      id: 'hello',
       value: this.state.message,
       onInput: this.handleInput
     });

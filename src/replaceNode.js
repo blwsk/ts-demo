@@ -1,9 +1,15 @@
 import invariant from 'invariant';
 
+function getActiveId() {
+  if (document.activeElement) {
+    return document.activeElement.id;
+  }
+} 
+
 export default (oldNode, newNode) => {
   const parent = oldNode.parentNode;
 
-  const isActive = document.activeElement === oldNode;
+  const activeId = getActiveId();
 
   if (parent) {
     parent.replaceChild(newNode, oldNode);
@@ -12,8 +18,12 @@ export default (oldNode, newNode) => {
     invariant('Attempted to replace a node not yet in the DOM.');
   }
 
-  if (isActive) {
-    newNode.focus();
-    newNode.value = newNode.value;
+  if (activeId) {
+    const activeElement = document.querySelector(`#${activeId}`);
+
+    if (activeElement) {
+      activeElement.focus();
+      activeElement.value = activeElement.value;
+    }
   }
 }
