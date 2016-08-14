@@ -49,7 +49,7 @@ export default class Component {
 
     this.state = newState;
 
-    if (this.node) {
+    if (this.node && this.node.parentNode) {
       this.reconcileState();
     }
   }
