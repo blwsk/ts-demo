@@ -3,20 +3,12 @@ import Woof, {y} from '../src/index.js';
 const div = (props, children) => Woof.createElement('div', props, children);
 
 class _OnButton extends Woof.Component {
-  shouldRender() {
-    return true;
-  }
-
   render() {
     return div(this.props, 'On');
   }
 }
 
 class _OffButton extends Woof.Component {
-  shouldRender() {
-    return true;
-  }
-  
   render() {
     return div(this.props, 'Off');
   }
@@ -28,10 +20,6 @@ const OffButton = y(_OffButton);
 class Button extends Woof.Component {
   constructor(props) {
     super(props);
-  }
-
-  shouldRender() {
-    return true;
   }
 
   render() {
@@ -48,10 +36,6 @@ class Ship extends Woof.Component {
 
     this.state = {on: false};
     this.handleToggle = this.handleToggle.bind(this);
-  }
-
-  shouldRender() {
-    return true;
   }
 
   handleToggle(e) {
@@ -95,10 +79,6 @@ class App extends Woof.Component {
     };
 
     this.handleClick = this.handleClick.bind(this);
-  }
-
-  shouldRender() {
-    return true;
   }
 
   handleClick(e) {

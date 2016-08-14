@@ -54,14 +54,11 @@ export default class Component {
     provides condition for re rendering based on new props
   */
   shouldRender(newProps) {
-    invariant('Component must implement `shouldRender` method');
-
     return true;
   }
 
   /*
     responds to setState, conditionally replacing existing DOM node
-
   */
   reconcileState(newState) {
     this.state = newState;
