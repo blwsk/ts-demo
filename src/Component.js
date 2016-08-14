@@ -47,7 +47,11 @@ export default class Component {
 
     const newState = Object.assign({}, this.state, stateChange);
 
-    this.reconcileState(newState);
+    this.state = newState;
+
+    if (this.node) {
+      this.reconcileState();
+    }
   }
 
   /*
@@ -60,9 +64,7 @@ export default class Component {
   /*
     responds to setState, conditionally replacing existing DOM node
   */
-  reconcileState(newState) {
-    this.state = newState;
-
+  reconcileState() {
     this.addBlocker('RENDER');
     const newNode = createElement(this.render());
     this.removeBlocker();
