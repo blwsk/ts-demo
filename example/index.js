@@ -1,6 +1,7 @@
 import Woof, {y} from '../src/index.js';
 
 const div = (props, children) => Woof.createElement('div', props, children);
+const input = (props, children) => Woof.createElement('input', props, children);
 
 class _OnButton extends Woof.Component {
   render() {
@@ -14,8 +15,32 @@ class _OffButton extends Woof.Component {
   }
 }
 
+class _InputBox extends Woof.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      message: ''
+    };
+
+    this.handleInput = this.handleInput.bind(this);
+  }
+  handleInput(e) {
+    this.setState({
+      message: e.target.value
+    });
+  }
+  render() {
+    return input({
+      value: this.state.message,
+      onInput: this.handleInput
+    });
+  }
+}
+
 const OnButton = y(_OnButton);
 const OffButton = y(_OffButton);
+const InputBox = y(_InputBox);
 
 class Button extends Woof.Component {
   constructor(props) {
@@ -95,6 +120,7 @@ class App extends Woof.Component {
         div({}, this.state.items.map(item => div({}, item.title))),
         ButtonClass1({onClick: this.handleClick, message: 'Hi'}),
         ButtonClass2({onClick: this.handleClick, message: 'Hello'}),
+        InputBox(),
         ShipClass()
       ])
     );

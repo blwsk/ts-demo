@@ -1,16 +1,3 @@
-// might no longer be necessary
-export const elements = {
-  BRANCH: 'BRANCH',
-  LEAF: 'LEAF',
-
-  DIV: 'div',
-  SPAN: 'span',
-  BUTTON: 'button',
-  INPUT: 'input',
-  H1: 'h1',
-  HR: 'hr'
-}
-
 export const attributes = {
   className: 'class',
   id: 'id',
@@ -22,5 +9,7 @@ export const attributes = {
 export const events = {
   onClick: 'click',
   onChange: 'change',
-  onInput: 'input'
+  onInput: 'input',
+  onFocus: 'focus',
+  onBlur: 'blur'
 }
