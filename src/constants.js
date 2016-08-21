@@ -3,7 +3,8 @@ export const attributes = {
   id: 'id',
   key: 'key',
   value: 'value',
-  href: 'href'
+  href: 'href',
+  style: 'style'
 }
 
 export const events = {
